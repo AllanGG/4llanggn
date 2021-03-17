@@ -1,5 +1,6 @@
 let img1; 
 let img3;  
+const sensibility = 30;
 
 function preload() {
 	img1 = loadImage("assets/aguegan.jpg");
@@ -32,6 +33,6 @@ function draw() {
   ellipse(382 + mouseX / 50,273 + mouseY / 50,3,3);
 */
 
-  image(img3, -10 + mouseX / 30,-10 + mouseY / 30,0,0);
+  image(img3, -10 + mouseX / sensibility,-10 + mouseY / sensibility,0,0);
   image(img2, 0, 0);
 }
