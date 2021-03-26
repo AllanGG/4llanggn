@@ -4,7 +4,7 @@ let img3;
 let img4;  
 let img5;  
 const sensibility = 30;
-let y = 0;
+let voice, analyzer;
 
 function preload() {
 	img1 = loadImage("assets/aguegan.jpg");
@@ -12,6 +12,8 @@ function preload() {
   img3 = loadImage("assets/eyes.png");
   img4 = loadImage("assets/menton.png");
   img5 = loadImage("assets/black.png");
+  voice = loadSound("assets/oooh.mp3");
+  pixeled = loadFont('assets/pixeled.ttf');
 }
 
 function setup() {
@@ -21,36 +23,37 @@ function setup() {
   img3.resize(680,700);
   img4.resize(680,700);
   img5.resize(680,700);
+
+  analyzer = new p5.Amplitude();
+  analyzer.setInput(voice);
+
+
+
 }
+
+function keyPressed() {
+pushMatrix;
+  if (keyCode === 65) {
+    voice.play();
+  } else{
+    voice.stop();
+  }
+  popMatrix;
+  }
 
 function draw() {
+  let rms = analyzer.getLevel();
+  let pos = map(rms, 0, 1, 0, 300);
+  
   image(img1, 0, 0);
-/*
-  stroke(3,108,95);
-  fill(124, 211, 200);
-  ellipse(272 + mouseX / 50,269 + mouseY / 50,20,20);
-  ellipse(378 + mouseX / 50,272 + mouseY / 50,20,20);
-  
-  fill(0);
-  ellipse(272 + mouseX / 50,269 + mouseY / 50,8,8);
-  ellipse(378 + mouseX / 50,272 + mouseY / 50,8,8);
-  
-  noStroke();
-  fill(255);
-  ellipse(276 + mouseX / 50,270 + mouseY / 50,3,3);
-  ellipse(382 + mouseX / 50,273 + mouseY / 50,3,3);
-*/
-
-  image(img3, -10 + mouseX / sensibility,-10 + mouseY / sensibility,0,0);
+  image(img3, -10 + mouseX / sensibility,-10 + mouseY / sensibility, 0, 0);
   image(img2, 0, 0);
   image(img5, 0, 0);
-
-
-  if (mouseIsPressed) {
-    image(img4, 0, 20);
-
-  } else {
-    image(img4, 0, -1);
-  }
+  image(img4, 0, -2 + pos);
+  textFont(pixeled);
+  textSize(width / 30);
+  fill(255);
+  text('Press "A"', 250, 650);
   
 }
+
